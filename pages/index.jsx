@@ -4,11 +4,7 @@ import Navigation from "../src/components/navigation";
 import styles from "../styles/Home.module.css";
 
 const Home = () => {
-  return (
-    <div>
-      <Navigation />
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default Home;

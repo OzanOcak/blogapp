@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Navigation = () => {
   return (
-    <nav className=" flex gap-5 m-2 justify-center text-[green] hover:text-[black]">
+    <nav className=" flex gap-5 m-2 justify-center text-[green] font-bold ">
       <Link href={"/"}>
         <a>Home</a>
       </Link>
