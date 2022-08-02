@@ -1,9 +1,9 @@
-import Navigation from "./navigation";
+import Header from "./header";
 
 const Layout = ({ children }) => {
   return (
     <div>
-      <Navigation />
+      <Header />
       {children}
     </div>
   );
