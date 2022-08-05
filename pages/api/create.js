@@ -1,3 +1,4 @@
+/** 
 import { dbConnect } from "../../lib/db-connect";
 
 export default async function handler(req, res) {
@@ -10,6 +11,7 @@ export default async function handler(req, res) {
 
   res.status(200).json({ name: "post is created" });
 }
+*/
 
 // curl -X POST localhost:3000/api/create
 // will get {"name":"post is created"} respond
