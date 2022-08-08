@@ -18,3 +18,22 @@ finally {
   },
   }
 ```
+
+we hash password and save user doc into db, we shouldn't use spread operator because it copies object's data and cause memory leak, and eslint give error
+
+````javascript
+    const hashedPassword = await bcrypt.hash(password, 8);
+   /* const user = new User({ ...req.body password: hashedPassword });
+             Error: Can't set headers after they are sent to the client*/
+    const user = new User({ name, email, password: hashedPassword });
+    const savedUser = await user.save();
+```
+
+
+## Cannot overwrite model once compiled Mongoose
+
+Because we already created user schema we can not over write it so we need to export previous created one if it is exists.
+
+```javascript
+export default mongoose.models.User || mongoose.model("User", UserSchema);
+````

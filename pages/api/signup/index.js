@@ -5,6 +5,7 @@ import {
   responseHandler,
   validateAll,
 } from "../../../src/utils/common";
+import bcrypt from "bcrypt";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -19,11 +20,16 @@ export default async function handler(req, res) {
     // create db connection
     await dbConnect();
 
-    const user = new User({ name, email, password });
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+    const user = new User({ name, email, password: hashedPassword }); // {...req.body}
     const savedUser = await user.save();
 
     if (savedUser) {
-      responseHandler(savedUser, res, 201);
+      const userDoc = savedUser._doc;
+      console.log(userDoc);
+      delete userDoc.password;
+      responseHandler(userDoc, res, 201);
     } else {
       errorHandler("something went wrong", res);
     }
