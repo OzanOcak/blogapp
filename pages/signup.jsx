@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { signup } from "../client/request";
 
@@ -7,12 +8,23 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const router = useRouter();
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
     const payload = { name, email, password };
     const result = await signup(payload);
-    console.log(result);
+    if (result.hasError) {
+      setErrorMessage(result.errorMessage);
+    } else {
+      console.log(result);
+      setErrorMessage(null);
+      setName("");
+      setEmail("");
+      setPassword("");
+      router.replace("/login");
+    }
   };
 
   return (
@@ -21,6 +33,12 @@ const SignUp = () => {
         <h1 className="text-3xl font-semibold text-center text-blue-700 underline">
           Sign up
         </h1>
+        {errorMessage && (
+          <p className="text-red-500">
+            {` * `}
+            {errorMessage}
+          </p>
+        )}
         <form className="mt-6" onSubmit={submitHandler}>
           <div className="mb-2">
             <label
