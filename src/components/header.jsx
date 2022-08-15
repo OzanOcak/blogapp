@@ -11,14 +11,17 @@ const Header = () => {
         <Link href={"/"}>
           <a className="text-[3rem] font-bold">BlogX</a>
         </Link>
-        <div className="mb-3">
-          <Link href={"/signin"}>
-            <a>Sign In</a>
-          </Link>
-          {" / "}
-          <Link href={"/signup"}>
-            <a>Sign Up</a>
-          </Link>
+        <div>
+          <button className="mb-3 px-2 py-2 border rounded-[1rem] mr-2 hover:bg-blue-500 hover:text-[white]">
+            <Link href={"/signin"}>
+              <a>Sign In</a>
+            </Link>
+          </button>
+          <button className="mb-3 px-2 py-2 border rounded-[1rem] hover:bg-blue-500 hover:text-[white]">
+            <Link href={"/signup"}>
+              <a>Sign Up</a>
+            </Link>
+          </button>
         </div>
       </nav>
     </header>

@@ -37,3 +37,18 @@ Because we already created user schema we can not over write it so we need to ex
 ```javascript
 export default mongoose.models.User || mongoose.model("User", UserSchema);
 ````
+
+## 400 Bad request error after changing the ip address
+
+```json
+{
+  "hasError": true,
+  "errorMessage": {
+    "ok": 0,
+    "code": 8000,
+    "codeName": "AtlasError"
+  }
+}
+```
+
+the best way to fix this issue creating new admin user to connect to database

@@ -49,7 +49,6 @@ const SignUp = () => {
             </label>
             <input
               type="text"
-              id="floatingInput"
               placeholder="Name"
               className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-[1rem]
             focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -66,7 +65,6 @@ const SignUp = () => {
             </label>
             <input
               type="email"
-              id="floatingInput"
               placeholder="example@mail.com"
               className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-[1rem] focus:border-blue-400
             focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
