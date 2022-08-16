@@ -1,24 +1,31 @@
 import { useState } from "react";
 import { getSession, signIn } from "next-auth/client"; // from next-auth
 import { useRouter } from "next/router";
+import { authConstants } from "../client/context/constants";
+import { useStore } from "../client/context";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
+  const [state, dispatch] = useStore();
 
   const loginHandler = async (e) => {
     e.preventDefault();
 
     const payload = { email, password };
+    dispatch({ type: authConstants.LOGIN_REQUEST });
     const res = await signIn("credentials", { ...payload, redirect: false }); //next-auth
     console.log({ res });
     //const session = await getSession(); //next-auth
     //console.log(session);
     if (!res.error) {
+      const session = await getSession();
+      dispatch({ type: authConstants.LOGIN_SUCCESS, payload: session });
       router.replace("/");
     } else {
+      dispatch({ type: authConstants.LOGIN_FAILURE, payload: res.error });
       setErrorMessage(res.error);
     }
     // redirect: false cz we want handle sign in in client side within the same page
