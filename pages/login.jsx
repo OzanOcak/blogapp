@@ -1,15 +1,28 @@
 import { useState } from "react";
-import { signIn } from "next-auth/client"; // from next-auth
+import { getSession, signIn } from "next-auth/client"; // from next-auth
+import { useRouter } from "next/router";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const router = useRouter();
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
+
     const payload = { email, password };
-    signIn("credentials", { ...payload });
+    const res = await signIn("credentials", { ...payload, redirect: false }); //next-auth
+    console.log({ res });
+    //const session = await getSession(); //next-auth
+    //console.log(session);
+    if (!res.error) {
+      router.replace("/");
+    } else {
+      setErrorMessage(res.error);
+    }
+    // redirect: false cz we want handle sign in in client side within the same page
+    // it also create csrf token
   };
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
@@ -17,6 +30,12 @@ const SignIn = () => {
         <h1 className="text-3xl font-semibold text-center text-blue-700 underline">
           Log in
         </h1>
+        {errorMessage && (
+          <p className="text-red-500">
+            {` * `}
+            {errorMessage}
+          </p>
+        )}
         <form className="mt-6" onSubmit={loginHandler}>
           <div className="mb-2">
             <label
