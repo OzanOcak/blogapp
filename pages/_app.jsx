@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { StoreProvider } from "../client/context";
 import Layout from "../src/components/layout";
 import "../styles/globals.css";
 
@@ -10,9 +11,11 @@ function MyApp({ Component, pageProps }) {
         <link rel="shortcut icon" href="" />
         {/** when cant find resource or link ,gives Econnreset error */}
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <StoreProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StoreProvider>
     </>
   );
 }

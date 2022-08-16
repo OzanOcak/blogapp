@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useStore } from "../../client/context";
 
 const Header = () => {
+  const [state, dispatch] = useStore();
+
+  console.log({ state });
   return (
     <header>
       <nav className=" flex gap-5 m-2 justify-between items-end text-blue-500  border-b">
