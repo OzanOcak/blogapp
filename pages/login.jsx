@@ -1,11 +1,23 @@
+import { useState } from "react";
+import { signIn } from "next-auth/client"; // from next-auth
+
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    const payload = { email, password };
+    signIn("credentials", { ...payload });
+  };
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-blue-700 underline">
           Log in
         </h1>
-        <form className="mt-6">
+        <form className="mt-6" onSubmit={loginHandler}>
           <div className="mb-2">
             <label
               htmlFor="email"
@@ -16,6 +28,8 @@ const SignIn = () => {
             <input
               type="email"
               placeholder="example@mail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-[1rem] focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -29,6 +43,8 @@ const SignIn = () => {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-[1rem] focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
