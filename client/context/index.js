@@ -8,15 +8,18 @@ const reducer = (state, action) => {
 
   switch (action.type) {
     case authConstants.LOGIN_REQUEST: {
-      return { ...state, user: { authenticating: true, ...state.user } };
+      return {
+        ...state,
+        user: { ...state.user, authenticating: true, authenticated: false },
+      };
     }
     case authConstants.LOGIN_SUCCESS: {
       return {
         ...state,
         user: {
+          ...action.payload.user,
           authenticating: false,
           authenticated: true,
-          ...action.payload.user,
         },
       };
     }
@@ -25,6 +28,8 @@ const reducer = (state, action) => {
         ...state,
         user: {
           ...state.user,
+          authenticating: false,
+          authenticated: false,
           error: action.payload,
         },
       };

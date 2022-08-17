@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useStore } from "../../client/context";
 import { getValue } from "../utils/common";
+import { signOut } from "next-auth/client";
+import { authConstants } from "../../client/context/constants";
 
 const Header = () => {
   const [state, dispatch] = useStore();
@@ -26,10 +28,15 @@ const Header = () => {
           <a className="text-[3rem] font-bold">BlogX</a>
         </Link>
         {authenticated ? (
-          <button className="mb-3 px-2 py-2 border rounded-[1rem] hover:bg-blue-500 hover:text-[white]">
-            <Link href={"/signup"}>
-              <a>Log Out</a>
-            </Link>
+          <button
+            onClick={() => {
+              signOut({ redirect: false }).then(() => {
+                dispatch({ type: authConstants.LOGIN_FAILURE });
+              });
+            }}
+            className="mb-3 px-2 py-2 border rounded-[1rem] hover:bg-blue-500 hover:text-[white]"
+          >
+            <a>Log Out</a>
           </button>
         ) : (
           <div>

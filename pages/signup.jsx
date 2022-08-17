@@ -1,12 +1,17 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useStore } from "../client/context";
 import { signup } from "../client/request";
+import { getValue } from "../src/utils/common";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [state] = useStore();
+  const user = getValue(state, ["user"], null);
+  // look at state.user, if it empty assign null
 
   const router = useRouter();
 
@@ -26,6 +31,15 @@ const SignUp = () => {
       router.replace("/login");
     }
   };
+
+  if (user && user.authenticated) {
+    return <h1>loading .....</h1>;
+  }
+
+  if (user && user.authenticated) {
+    router.replace("/");
+    return null;
+  }
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">

@@ -3,6 +3,7 @@ import { getSession, signIn } from "next-auth/client"; // from next-auth
 import { useRouter } from "next/router";
 import { authConstants } from "../client/context/constants";
 import { useStore } from "../client/context";
+import { getValue } from "../src/utils/common";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
   const [state, dispatch] = useStore();
+  const user = getValue(state, ["user"], null);
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -31,6 +33,11 @@ const SignIn = () => {
     // redirect: false cz we want handle sign in in client side within the same page
     // it also create csrf token
   };
+
+  if (user && user.authenticated) {
+    router.replace("/");
+    return null;
+  }
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">

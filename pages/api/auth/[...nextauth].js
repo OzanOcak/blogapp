@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../../../src/models/user";
 import bcrypt from "bcrypt";
 import { validateAll } from "../../../src/utils/common";
+import { dbConnect } from "../../../lib/db-connect";
 
 export default NextAuth({
   providers: [
@@ -25,6 +26,9 @@ export default NextAuth({
           console.log({ email, password });
 
           validateAll({ email, password });
+
+          // connect db cz User.FindOne buffering time error after 1sec
+          await dbConnect();
 
           const user = await User.findOne({ email }).exec();
           if (!user) {
